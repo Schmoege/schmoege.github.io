@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>トーッパーのウェブページ</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet" />        
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="script.js"></script>
+    </head>
+<body>
+
+<div ng-app="kanjiApp" ng-controller="kanjiCtrl"> 
+
+    <h1>トーッパーのウェブページ</h1>
+    <div id="tileBox">
+        <div class="tile" ng-repeat="x in kanji" ng-disabled = "correct" ng-click="toggleActive(x)" ng-disabled="completed" ng-class="{clicked : x.clicked, correct : x.correct, fail : x.fail}">
+            <div ng-hide="x.clicked == false" class="tileKanji">{{ x.character }}</div>
+            <!-- <div class="tileMeaning">{{ x.meaning }}</div> -->
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

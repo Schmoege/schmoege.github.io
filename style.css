@@ -1,0 +1,54 @@
+html, body{
+    width: 100%;
+    height:100%;
+    background-color: black;
+}
+#tileBox{
+    width: 49%;
+    height: 100%;
+}
+.tile{
+    display: block;
+    width:200px;
+    height: 100px;
+    margin:1%;
+    background-color: pink;
+    float:left;
+    font-family: "Sawarabi Mincho";
+    text-align: center;
+    opacity: 0.8;
+    object-fit: contain;
+}
+.tile:hover{
+    background-color: #F04B69;
+}
+.tileKanji {
+    font-size: 3vh;
+}
+/* .tileMeaning{
+    font-size: 1em;
+} */
+h1{
+    font-family: "Nico Moji";
+    color: red;
+    font-size: 5em;
+    text-shadow: 0 5px 0 #3F0000;
+}
+.clicked{
+    background-color: white;
+}
+.correct{
+    background-color: green;
+}
+.fail{
+    background-color: #FF3A3A;
+}
+@media screen and (max-width: 768px) {
+    #tilebox {
+        width:100%;
+        height: auto;
+    }
+    .tile {
+        width: 30%;
+    }
+}
