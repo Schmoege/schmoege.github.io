@@ -50,7 +50,6 @@ function compareKanjiInArray($timeout){
             }, this);
             if(amountCorrectTiles === tilesToEndGame){
                 window.alert("You are winner!");
-                $scope.gameOver=true;
             }
         }
         else{
