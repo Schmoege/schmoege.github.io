@@ -29,7 +29,7 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
         $scope.kanji = scopeArray});
 
         $scope.toggleActive = function(chosenTile){
-            if(chosenTile != lastPressedTile) {
+            if(chosenTile != lastPressedTile && !chosenTile.correct) {
                 chosenKanji.push(chosenTile);
                 chosenTile.clicked = true;
                 lastPressedTile = chosenTile;
