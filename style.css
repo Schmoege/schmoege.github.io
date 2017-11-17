@@ -27,7 +27,7 @@ html, body{
 }
 
 .tileKanji {
-    vertical-align: middle;
+    text-align: middle;
     font-size: 2vh;
     text-align: center;
 }
@@ -78,7 +78,7 @@ h1 {
         width: 30%;
     }
     .tileKanji{
-        font-size: 5vh;
+        font-size: 3vh;
     }
     #introduction, #optionsBox, #startBtn{
         font-size: 3vh;
