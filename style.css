@@ -74,11 +74,11 @@ h1 {
     .tile {
         width: 30%;
     }
-    
+    .tile:hover {
+        background-color: pink;
+    }
     #introduction, #optionsBox{
         font-size: 2vh;
     }
-}
-@media (hover: none) {
-    .tile:hover { color: inherit; }
+
 }
