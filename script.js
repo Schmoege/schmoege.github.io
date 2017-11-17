@@ -74,10 +74,10 @@ function compareKanjiInArray($timeout){
             }
         }
         else{
+            resetFailedTiles();
             chosenKanji[0].fail = true;
             chosenKanji[1].fail = true;
             $timeout(function(){
-                resetFailedTiles();
                 lastPressedTile = undefined;
                 chosenKanji[0].fail = false;
                 chosenKanji[1].fail = false;
