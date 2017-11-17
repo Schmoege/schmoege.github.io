@@ -27,9 +27,7 @@ html, body{
     opacity: 0.8;
     object-fit: contain;
 }
-.tile:hover{
-    background-color: #F04B69;
-}
+
 .tileKanji {
     font-size: 2vh;
     text-align: center;
@@ -53,9 +51,7 @@ h1 {
     margin: 15px;
     border: none;
 }
-#startBtn:hover{
-    background-color: #F04B69;
-}
+
 
 .clicked{
     background-color: white;
@@ -66,16 +62,21 @@ h1 {
 .fail{
     background-color: #FF3A3A;
 }
+@media screen and (min-width: 768px) {
+    .tile:hover{
+        background-color: #F04B69;
+    }
+    #startBtn:hover{
+        background-color: #F04B69;
+    }
 
+}
 @media screen and (max-width: 768px) {
     #tileBox {
         width:100%;
     }
     .tile {
         width: 30%;
-    }
-    .tile:hover {
-        background-color: pink;
     }
     #introduction, #optionsBox{
         font-size: 2vh;
