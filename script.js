@@ -1,6 +1,8 @@
 var api = "bb05488111608f09bfd5f0c89099b773";
-var levels = "";
-var adress = "https://www.wanikani.com/api/user/"+api+"/kanji/"+levels;
+// var levels = 5;
+// var resource ="radicals";
+
+var userInfo = "https://www.wanikani.com/api/user/"+api+"/user-information";
 var chosenKanji = []
 var tilesToEndGame;
 var amountCorrectTiles = 0;
@@ -8,27 +10,43 @@ var lastPressedTile;
 
 var app = angular.module('kanjiApp', []);
 app.controller('kanjiCtrl', function($scope, $http, $timeout) {
-    $http.get(adress)
-    .then(function (response) {
-        var shuffledResponse = shuffle(response.data.requested_information);
-        var slicedResponse = shuffledResponse.slice(0,8);
+    
+    $scope.resources = ["Kanji","Vocabulary"];
+    $http.get(userInfo)
+    .then(function(response){
+        $scope.user = response.data.user_information.username;
+        $scope.availableLevels = response.data.user_information.level;
+    });
+    // $scope.regexWithComma ="[\d,]";
+    // $scope.regexWithoutComma = "[\d]";
 
-        var kanjiArray = [];
-        var meaningArray = [];
+    $scope.startGame = function(){
+        $scope.gameOn = true;
+        var selectedResource = $scope.selectedResource.toLowerCase();
+        var adress = "https://www.wanikani.com/api/user/"+api+"/"+selectedResource+"/"+$scope.levels;
+
+        $http.get(adress)
+        .then(function (response) {
+            var shuffledResponse = shuffle(response.data.requested_information);
+            var slicedResponse = shuffledResponse.slice(0,8);
+
+            var kanjiArray = [];
+            var meaningArray = [];
         
-        for(var i = 0; i<slicedResponse.length; i++) {
-            var kanjiObject = {character: slicedResponse[i].character, clicked: false, correct: false, tileId : i, fail: false};
-            var meaningObject = {character: slicedResponse[i].meaning, clicked: false, correct: false, tileId : i, fail: false};
-            kanjiArray.push(kanjiObject);
-            meaningArray.push(meaningObject);
-        }
+            for(var i = 0; i<slicedResponse.length; i++) {
+                var kanjiObject = {character: slicedResponse[i].character, clicked: false, correct: false, tileId : i, fail: false};
+                var meaningObject = {character: slicedResponse[i].meaning, clicked: false, correct: false, tileId : i, fail: false};
+            
+                kanjiArray.push(kanjiObject);
+                meaningArray.push(meaningObject);
+            }
 
-        var scopeArray = shuffle(kanjiArray.concat(meaningArray));
+            var scopeArray = shuffle(kanjiArray.concat(meaningArray));
         
-        tilesToEndGame = scopeArray.length;
-        $scope.kanji = scopeArray});
+            tilesToEndGame = scopeArray.length;
+            $scope.kanji = scopeArray;});
 
-        $scope.toggleActive = function(chosenTile){
+            $scope.toggleActive = function(chosenTile){
             if(chosenTile != lastPressedTile && !chosenTile.correct) {
                 chosenKanji.push(chosenTile);
                 chosenTile.clicked = true;
@@ -36,6 +54,7 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
                 compareKanjiInArray($timeout);
             }
         }
+    }
 });
 
 function compareKanjiInArray($timeout){
@@ -63,7 +82,6 @@ function compareKanjiInArray($timeout){
                 chosenKanji = [];
             },1000);
         }
-          //Clears array
     } 
 }
 

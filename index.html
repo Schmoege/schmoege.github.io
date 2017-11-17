@@ -10,16 +10,23 @@
         <script src="script.js"></script>
     </head>
 <body>
-
-<div ng-app="kanjiApp" ng-controller="kanjiCtrl"> 
-
     <h1>トーッパーのウェブページ</h1>
-    <div id="tileBox">
-        <div class="tile" ng-repeat="x in kanji" ng-click="toggleActive(x)" ng-class="{clicked : x.clicked, correct : x.correct, fail : x.fail}">
-            <div ng-hide="x.clicked == false" class="tileKanji">{{ x.character }}</div>
+    <div ng-app="kanjiApp" ng-controller="kanjiCtrl">
+        <div id="optionsBox" ng-hide="gameOn">
+                <p>Hello {{user}} and welcome to the WaniKani Memory Game!<br />
+                    Available levels: 1 - {{availableLevels}}. Leave input empty select from every level.</p>
+            <select ng-model="selectedResource" ng-options="resource for resource in resources"></select>
+            <form id="levelsForm">
+                Levels: <input type="text" ng-model="levels">
+            </form>
+            <button ng-click="startGame()">Start the game</button>
+            
+        </div>
+        <div id="tileBox">
+            <div class="tile" ng-repeat="x in kanji" ng-click="toggleActive(x)" ng-class="{clicked : x.clicked, correct : x.correct, fail : x.fail}">
+                <div ng-hide="x.clicked == false" class="tileKanji">{{ x.character }}</div>
+            </div>
         </div>
     </div>
-</div>
-
 </body>
 </html>
