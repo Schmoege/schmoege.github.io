@@ -73,7 +73,7 @@ h1 {
     .tile {
         width: 30%;
     }
-    #introduction{
+    #introduction, #optionsBox{
         font-size: 2vh;
     }
 }
