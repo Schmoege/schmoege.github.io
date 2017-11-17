@@ -7,8 +7,9 @@ html, body{
     width: 49%;
     height: 100%;
 }
-.optionsBox {
-    float:left;
+#optionsBox {
+    font-family: sans-serif;
+    font-size: 1.5em;
 }
 .tile, .optionsBox {
     background-color: pink;
@@ -30,18 +31,32 @@ html, body{
     background-color: #F04B69;
 }
 .tileKanji {
-    font-size: 3vh;
+    font-size: 2vh;
+    text-align: center;
 }
-h1{
+h1 {
     font-family: "Nico Moji";
     color: red;
     font-size: 5em;
     text-shadow: 0 5px 0 #3F0000;
 }
-p{
-    font-family: sans-serif;
-    font-size: 1.5em;
+
+#introduction {
+    margin-bottom: 15px;
 }
+
+#startBtn {
+    display: inline-block;
+    background-color: red;
+    font-size: 2vh;
+    padding: 15px 32px;
+    margin: 15px;
+    border: none;
+}
+#startBtn:hover{
+    background-color: #F04B69;
+}
+
 .clicked{
     background-color: white;
 }
@@ -52,11 +67,13 @@ p{
     background-color: #FF3A3A;
 }
 @media screen and (max-width: 768px) {
-    #tilebox {
+    #tileBox {
         width:100%;
-        height: auto;
     }
     .tile {
         width: 30%;
+    }
+    #introduction{
+        font-size: 2vh;
     }
 }

@@ -13,13 +13,19 @@
     <h1>トーッパーのウェブページ</h1>
     <div ng-app="kanjiApp" ng-controller="kanjiCtrl">
         <div id="optionsBox" ng-hide="gameOn">
-                <p>Hello {{user}} and welcome to the WaniKani Memory Game!<br />
-                    Available levels: 1 - {{availableLevels}}. Leave input empty select from every level.</p>
-            <select ng-model="selectedResource" ng-options="resource for resource in resources"></select>
+            <div id="introduction">
+                Hello {{user}} and welcome to the WaniKani Memory Game!<br />
+                Please enter the levels you want to practice. Leave input empty to select from every level.<br />
+                Available levels: 1 - {{availableLevels}}.<br />
+            </div>
+            <div id="resourceSelect">
+                Subject:
+                <select ng-init = "selectedResource = resources[0]" ng-model="selectedResource" ng-options="resource for resource in resources"></select>
+            </div>
             <form id="levelsForm">
                 Levels: <input type="text" ng-model="levels">
             </form>
-            <button ng-click="startGame()">Start the game</button>
+            <button id="startBtn" ng-click="startGame()">Start the game</button>
             
         </div>
         <div id="tileBox">

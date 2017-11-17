@@ -1,6 +1,4 @@
 var api = "bb05488111608f09bfd5f0c89099b773";
-// var levels = 5;
-// var resource ="radicals";
 
 var userInfo = "https://www.wanikani.com/api/user/"+api+"/user-information";
 var chosenKanji = []
@@ -23,7 +21,11 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
     $scope.startGame = function(){
         $scope.gameOn = true;
         var selectedResource = $scope.selectedResource.toLowerCase();
-        var adress = "https://www.wanikani.com/api/user/"+api+"/"+selectedResource+"/"+$scope.levels;
+        var levels = $scope.levels;
+        if (!levels) {
+            levels ="";
+        }
+        var adress = "https://www.wanikani.com/api/user/"+api+"/"+selectedResource+"/"+levels;
 
         $http.get(adress)
         .then(function (response) {
