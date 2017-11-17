@@ -82,7 +82,7 @@ function compareKanjiInArray($timeout){
                 chosenKanji[0].fail = false;
                 chosenKanji[1].fail = false;
                 chosenKanji = [];
-            },3000);
+            },1500);
         }
     } 
 }

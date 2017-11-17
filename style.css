@@ -52,7 +52,6 @@ h1 {
     border: none;
 }
 
-
 .clicked{
     background-color: white;
 }
@@ -62,6 +61,7 @@ h1 {
 .fail{
     background-color: #FF3A3A;
 }
+
 @media screen and (min-width: 480px) {
     .tile:hover{
         background-color: #F04B69;
