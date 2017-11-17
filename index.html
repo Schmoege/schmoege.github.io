@@ -30,7 +30,7 @@
             
         </div>
         <div id="tileBox">
-            <div class="tile" ng-repeat="x in kanji" ng-click="toggleActive(x)" ng-class="{fail : x.fail, clicked : x.clicked, correct : x.correct}">
+            <div class="tile" ng-repeat="x in kanji" ng-click="toggleActive(x)" ng-class="{clicked : x.clicked, correct : x.correct, fail : x.fail}">
                 <div ng-hide="x.clicked == false" class="tileKanji">{{ x.character }}</div>
             </div>
         </div>
