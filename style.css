@@ -66,14 +66,19 @@ h1 {
 .fail{
     background-color: #FF3A3A;
 }
-@media only screen and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2)  {
+
+@media screen and (max-width: 768px) {
     #tileBox {
         width:100%;
     }
     .tile {
         width: 30%;
     }
+    
     #introduction, #optionsBox{
         font-size: 2vh;
     }
+}
+@media (hover: none) {
+    .tile:hover { color: inherit; }
 }
