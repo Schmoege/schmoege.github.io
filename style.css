@@ -20,15 +20,14 @@ html, body{
     width:200px;
     height: 100px;
     margin:1%;
-    
     float:left;
-    
-    text-align: center;
     opacity: 0.8;
     object-fit: contain;
+    overflow: hidden;
 }
 
 .tileKanji {
+    vertical-align: middle;
     font-size: 2vh;
     text-align: center;
 }
@@ -78,8 +77,11 @@ h1 {
     .tile {
         width: 30%;
     }
-    #introduction, #optionsBox{
-        font-size: 2vh;
+    .tileKanji{
+        font-size: 4vh;
+    }
+    #introduction, #optionsBox, #startBtn{
+        font-size: 3vh;
     }
 
 }
