@@ -23,10 +23,10 @@
                 Subject:
                 <select ng-init = "selectedResource = resources[0]" ng-model="selectedResource" ng-options="resource for resource in resources"></select>
             </div>
-            <form id="levelsForm">
-                Levels: <input type="text" ng-model="levels">
+            <form id="levelsForm" name="levelInput">
+                Levels: <input type="text" ng-model="levels" ng-pattern="regex" required/>
             </form>
-            <button id="startBtn" ng-click="startGame()">Start the game</button>
+            <button id="startBtn" ng-click="startGame()" ng-disabled="levelInput.$invalid">Start the game</button>
             
         </div>
         <div id="tileBox">

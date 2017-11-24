@@ -16,7 +16,7 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
         $scope.availableLevels = response.data.user_information.level;
     });
     // $scope.regexWithComma ="[\d,]";
-    // $scope.regexWithoutComma = "[\d]";
+    $scope.regex = "^[0-9]+$";
 
     $scope.startGame = function(){
         $scope.gameOn = true;
@@ -29,7 +29,14 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
 
         $http.get(adress)
         .then(function (response) {
-            var shuffledResponse = shuffle(response.data.requested_information);
+            var shuffledResponse = [];
+            if(selectedResource === "vocabulary" && !levels){
+                shuffledResponse = shuffle(response.data.requested_information.general); //API-relaterat
+            }
+            else {
+                shuffledResponse = shuffle(response.data.requested_information);
+            }
+            
             var slicedResponse = shuffledResponse.slice(0,8);
 
             var kanjiArray = [];
