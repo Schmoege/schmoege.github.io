@@ -61,12 +61,7 @@ h1 {
 .fail{
     background-color: #FF3A3A;
 }
-/* input.ng-dirty.ng-invalid {
-    background-color: pink;
-}
-input.ng-valid {
-    background-color: lightgreen;
-} */
+
 
 @media screen and (min-width: 480px) {
     .tile:hover{
@@ -84,8 +79,14 @@ input.ng-valid {
     .tile {
         width: 30%;
     }
+    .tileKanji {
+        font-size: 3vh;
+    }
     #introduction, #optionsBox, #startBtn{
         font-size: 3vh;
+    }
+    h1{
+        font-size:6vh;
     }
 
 }
