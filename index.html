@@ -16,7 +16,7 @@
         <div id="optionsBox" ng-hide="gameOn">
             <div id="introduction">
                 Hello {{user}} and welcome to the WaniKani Memory Game!<br />
-                Please enter the levels you want to practice. Leave input empty to select from every level.<br />
+                Please enter the levels you want to practice. Leave the input empty to select from every level.<br />
                 Available levels: 1 - {{availableLevels}}.<br />
             </div>
             <div id="resourceSelect">
@@ -24,11 +24,17 @@
                 <select ng-init = "selectedResource = resources[0]" ng-model="selectedResource" ng-options="resource for resource in resources"></select>
             </div>
             <form id="levelsForm" name="levelInput">
-                Levels: <input type="text" ng-model="levels" ng-pattern="regex" required/>
+                Level: <input type="number" ng-model="levels" min=1 max={{availableLevels}} />
             </form>
-            <button id="startBtn" ng-click="startGame()" ng-disabled="levelInput.$invalid">Start the game</button>
-            
+            <button class="btn" ng-click="startGame()" ng-disabled="levelInput.$invalid">Start the game</button>
         </div>
+
+        <div id="winMessage" ng-show="gameWon">
+            Congratulations! You beat the game!<br />
+            Click here to play again!<br />
+            <button class="btn" ng-click="restart()">遊ぼう！</button>
+        </div>
+
         <div id="tileBox">
             <div class="tile" ng-repeat="x in kanji" ng-click="toggleActive(x)" ng-class="{clicked : x.clicked, correct : x.correct, fail : x.fail}">
                 <div ng-hide="x.clicked == false" class="tileKanji">{{ x.character }}</div>
