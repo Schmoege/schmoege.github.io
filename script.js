@@ -22,7 +22,7 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
         $scope.availableLevels = response.data.user_information.level;
     });
     
-    var selectableLevels = createLevelArray();
+    // var selectableLevels = createLevelArray();
     
     $scope.startGame = function(){
         $scope.gameWon = false;
