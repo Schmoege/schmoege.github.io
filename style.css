@@ -67,6 +67,10 @@ h1 {
 .fail{
     background-color: #FF3A3A;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c877a246e633fb0a4c9e89174749f3681dd7b68
 
 
 @media screen and (min-width: 480px) { /* To avoid having lingering hover effects on mobile screens*/
@@ -86,8 +90,11 @@ h1 {
         width: 30%;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     #introduction, #optionsBox, #winMessage, .btn{
 =======
+=======
+>>>>>>> 3c877a246e633fb0a4c9e89174749f3681dd7b68
     .tileKanji {
         font-size: 3vh;
     }
