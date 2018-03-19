@@ -12,6 +12,7 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
     $scope.restart = function(){
         $scope.gameWon = false;
         $scope.gameOn = false;
+        amountCorrectTiles = 0;
     }
 
     $scope.resources = ["Kanji","Vocabulary"];
