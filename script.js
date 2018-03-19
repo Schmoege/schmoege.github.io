@@ -22,8 +22,6 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
         $scope.availableLevels = response.data.user_information.level;
     });
     
-    // var selectableLevels = createLevelArray();
-    
     $scope.startGame = function(){
         $scope.gameWon = false;
         $scope.gameOn = true;
@@ -101,14 +99,6 @@ function compareKanjiInArray($timeout, $scope){
             },1000);
         }
     } 
-}
-
-function createLevelArray(maxLevels) {
-    var dropdownArray = [];
-    for(var i = 0; i>maxLevels; i++){
-        dropdownArray.push((i+1));
-    }
-    return dropdownArray;
 }
 
 function resetFailedTiles() {
