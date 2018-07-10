@@ -1,32 +1,31 @@
-var api = "bb05488111608f09bfd5f0c89099b773";
-
-var userInfo = "https://www.wanikani.com/api/user/"+api+"/user-information";
+var api;
 var chosenKanji = []
 var tilesToEndGame;
 var amountCorrectTiles = 0;
 var lastPressedTile;
 
-var app = angular.module('kanjiApp', []);
-app.controller('kanjiCtrl', function($scope, $http, $timeout) {
+var app = angular.module('kanjiApp', ['ngCookies']);
+app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
     
     $scope.restart = function(){
         $scope.gameWon = false;
         $scope.gameOn = false;
         amountCorrectTiles = 0;
     }
+    var apiCookie = $cookies.get('apiKey'); //Om api är sparad, hämta cookie och sätt input som dett
+    if(apiCookie != null) {
+        $scope.apiKey = apiCookie;
+    }
 
     $scope.resources = ["Kanji","Vocabulary"];
     
-    $http.get(userInfo)
-    .then(function(response){
-        $scope.user = response.data.user_information.username;
-        $scope.availableLevels = response.data.user_information.level;
-    });
+    $scope.getUserInfo = function(){ //Hämta namn och tillgängliga nivåer
+        getUserInfo($scope, $http, $cookies);
+    }
     
     $scope.startGame = function(){
-        $scope.gameWon = false;
-        $scope.gameOn = true;
-        var selectedResource = $scope.selectedResource.toLowerCase();
+        
+        var selectedResource = $scope.selectedResource.toLowerCase(); //
         var levels = $scope.levels;
         if (!levels) {
             levels ="";
@@ -35,6 +34,11 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
 
         $http.get(adress)
         .then(function (response) {
+
+            $scope.gameWon = false;
+            $scope.gameOn = true;
+
+            $scope.errorMessage = false;
             var shuffledResponse = [];
             if(selectedResource === "vocabulary" && !levels){
                 shuffledResponse = shuffle(response.data.requested_information.general); //API-relaterat
@@ -70,9 +74,36 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout) {
                 lastPressedTile = chosenTile;
                 compareKanjiInArray($timeout, $scope);
             }
+        }, //error
+        function(error){
+            $scope.errorMessage = true;
+            var errorDiv = clearAndGetErrorDiv();
+            errorDiv.innerHTML = "Failed getting the requested resources from WaniKani. Either WaniKani is under maintenance or something has fucked up big time. Please try again and good luck.";
         }
     }
 });
+
+function getUserInfo($scope, $http, $cookies) {
+    api = $scope.apiKey;
+    var userInfo = getUserInfoUrl(api);
+    
+    $http.get(userInfo)
+    .then(function(response){
+        $scope.user = response.data.user_information.username;
+        $scope.availableLevels = response.data.user_information.level;
+        $scope.apiSuccessfullyRetrieved = true;
+        if($scope.rememberApiKey === true){
+            $cookies.put('apiKey',api);
+        }
+        $scope.errorMessage = false;
+    }, //vid error
+    function(error) {
+        $scope.errorMessage = true;
+        var errorDiv = clearAndGetErrorDiv();
+        errorDiv.innerHTML = "The API key is not valid or WaniKani is undergoing maintenance. Please check your key or wait until the maintenance is over."
+         
+    });
+}
 
 function compareKanjiInArray($timeout, $scope){
     
@@ -127,4 +158,12 @@ function shuffle(array) {
         array[index] = temp;
     }
     return array;
+}
+function getUserInfoUrl(apiString) {
+    return "https://www.wanikani.com/api/user/"+apiString+"/user-information";
+}
+function clearAndGetErrorDiv(){
+    var errordiv = document.getElementById("errorMessage");
+    errordiv.innerHTML = "";
+    return errordiv;
 }

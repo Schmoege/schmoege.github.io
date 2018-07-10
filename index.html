@@ -1,37 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>トーッパーのウェブページ</title>
-        <link rel="stylesheet" href="style.css">
-        <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet" />        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-        <script src="script.js"></script>
-    </head>
+
+<head>
+    <title>トーッパーのウェブページ</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script>
+    <script src="script.js"></script>
+</head>
+
 <body>
     <h1>トーッパーのウェブページ</h1>
+
     <div ng-app="kanjiApp" ng-controller="kanjiCtrl">
-        <div id="optionsBox" ng-hide="gameOn">
+
+        <div id="enterAPIkey" ng-hide="apiSuccessfullyRetrieved">
+            Please enter your API key.
+            <br /> You can access it through Settings -> Account on the WaniKani website.
+            <br /> Your key will be stored as a cookie if you check "Remember me"
+            <br />
+            <div id="apiInputFields">
+
+                <form id="apiKey" name="apiInput">
+                    Enter your key here
+                    <input id="apiInput" type="text" ng-model="apiKey" required />
+                </form>
+                Remember API key
+                <input type="checkbox" ng-model="rememberApiKey" />
+                <br/>
+            </div>
+
+            <button class="btn" ng-click="getUserInfo()" ng-disabled="apiInput.$invalid">Send key</button>
+        </div>
+
+        <div id="optionsBox" ng-hide="gameOn || !apiSuccessfullyRetrieved">
             <div id="introduction">
-                Hello {{user}} and welcome to the WaniKani Memory Game!<br />
-                Please enter the levels you want to practice. Leave the input empty to select from every level.<br />
-                Available levels: 1 - {{availableLevels}}.<br />
+                Hello {{user}} and welcome to the WaniKani Memory Game!
+                <br /> Please enter the levels you want to practice. Leave the input empty to select from every level.
+                <br /> Available levels: 1 - {{availableLevels}}.
+                <br />
             </div>
             <div id="resourceSelect">
                 Subject:
-                <select ng-init = "selectedResource = resources[0]" ng-model="selectedResource" ng-options="resource for resource in resources"></select>
+                <select ng-init="selectedResource = resources[0]" ng-model="selectedResource" ng-options="resource for resource in resources"></select>
             </div>
             <form id="levelsForm" name="levelInput">
-                Level: <input type="number" ng-model="levels" min=1 max={{availableLevels}} />
+                Level:
+                <input type="number" ng-model="levels" min=1 max={{availableLevels}} />
             </form>
             <button class="btn" ng-click="startGame()" ng-disabled="levelInput.$invalid">Start the game</button>
         </div>
 
         <div id="winMessage" ng-show="gameWon">
-            Congratulations! You beat the game!<br />
-            Click here to play again!<br />
+            Congratulations! You beat the game!
+            <br /> Click here to play again!
+            <br />
             <button class="btn" ng-click="restart()">遊ぼう！</button>
         </div>
 
@@ -40,6 +67,10 @@
                 <div ng-hide="x.clicked == false" class="tileKanji">{{ x.character }}</div>
             </div>
         </div>
+        <div id="errorMessage" ng-show="errorMessage">
+            <!-- Felmeddelande appenderas här -->
+        </div>
     </div>
 </body>
+
 </html>

@@ -1,13 +1,28 @@
 html, body{
     width: 100%;
     height:100%;
-    background-color: rgb(128, 126, 126);
+    background-color: rgb(247, 245, 245);
+}
+#errorMessage {
+    margin:2%;
+    padding:5%;
+    width: 80%;
+    border: 2px solid rgb(197, 9, 44);
+    border-radius: 10px;
+    background-color: rgb(243, 134, 154);
+    color:  rgb(197, 9, 44);
+}
+#apiInputFields {
+    margin: 10px;
+}
+#apiInput {
+    width: 20%;
 }
 #tileBox{
     width: 49%;
     height: 100%;
 }
-#optionsBox {
+#optionsBox, #enterAPIkey, #errorMessage {
     font-family: sans-serif;
     font-size: 1.5em;
 }
@@ -96,7 +111,7 @@ input::-webkit-inner-spin-button {
     .tileKanji {
         font-size: 3vh;
     }
-    #introduction, #optionsBox, #winMessage, .btn{
+    #introduction, #optionsBox, #winMessage, #enterAPIkey, .btn{
         font-size: 3vh;
     }
     h1{
