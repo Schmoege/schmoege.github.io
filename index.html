@@ -46,14 +46,19 @@
             </div>
             <div id="resourceSelect">
                 Subject:
-                <select ng-init="selectedResource = resources[0]" ng-model="selectedResource" ng-options="resource for resource in resources"></select>
+                <select ng-init="selectedResource = resources[0]" ng-model="selectedResource" ng-options="resource for resource in resources" ng-change="showHideLevelInput()"></select>
             </div>
-            <form id="levelsForm" name="levelInput">
+            <form id="levelsForm" name="levelInput" ng-hide="radicalsSelected">
                 Level:
                 <input type="number" ng-model="levels" min=1 max={{availableLevels}} />
             </form>
+            <div ng-show="radicalsSelected">
+                Selecting radicals will get you your non-burned radicals.
+            </div>
             <button class="btn" ng-click="startGame()" ng-disabled="levelInput.$invalid">Start the game</button>
         </div>
+
+        <div id="loader" ng-show="loading"></div>
 
         <div id="winMessage" ng-show="gameWon">
             Congratulations! You beat the game!
@@ -62,9 +67,16 @@
             <button class="btn" ng-click="restart()">遊ぼう！</button>
         </div>
 
+        <button class="btn" ng-show="gameOn && !gameWon" ng-click="restart()">Stop the game</button>
+
         <div id="tileBox">
             <div class="tile" ng-repeat="x in kanji" ng-click="toggleActive(x)" ng-class="{clicked : x.clicked, correct : x.correct, fail : x.fail}">
-                <div ng-hide="x.clicked == false" class="tileKanji">{{ x.character }}</div>
+                <div ng-hide="x.clicked == false" class="tileKanji">
+                    <div class="content">
+                            <img class="radicalImg" src={{x.imgUrl}} /> <!-- Om det är radical utan char -->
+                            {{ x.character }}
+                    </div>
+                </div>
             </div>
         </div>
         <div id="errorMessage" ng-show="errorMessage">

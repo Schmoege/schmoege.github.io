@@ -28,7 +28,8 @@ html, body{
 }
 .tile, .optionsBox {
     background-color: pink;
-    font-family: "Sawarabi Mincho";
+    /* font-family: "Sawarabi Mincho"; */
+    
 }
 #winMessage {
     font-family: sans-serif;
@@ -40,7 +41,7 @@ html, body{
 .tile{
     display: block;
     width:200px;
-    height: 100px;
+    height: 150px;
     margin:1%;
     float:left;
     opacity: 0.8;
@@ -49,10 +50,25 @@ html, body{
     overflow-wrap: break-word;
 }
 .tileKanji {
-    text-align: middle;
-    font-size: 2vh;
-    text-align: center;
+    font-size: 1.6em;
+    width: 100%;
+    height:100%;
+    font-family: "Meiryo";
+    color: white;
 }
+
+.radicalImg {
+    max-height: 20%;
+    width: auto;
+    height: auto;
+}
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 h1 {
     font-family: "Nico Moji";
     color: red;
@@ -74,13 +90,28 @@ h1 {
 }
 
 .clicked{
-    background-color: white;
+    background-color: rgb(70, 69, 69);
 }
 .correct{
-    background-color: green;
+    background-color: rgb(6, 99, 10);
 }
 .fail{
     background-color: #FF3A3A;
+}
+
+
+#loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #df5482; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 input[type='number'] {

@@ -11,20 +11,32 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
         $scope.gameWon = false;
         $scope.gameOn = false;
         amountCorrectTiles = 0;
+        kanjiArray = [];
+        meaningArray = [];
     }
     var apiCookie = $cookies.get('apiKey'); //Om api är sparad, hämta cookie och sätt input som dett
     if(apiCookie != null) {
         $scope.apiKey = apiCookie;
+        $scope.rememberApiKey = true;
     }
 
-    $scope.resources = ["Kanji","Vocabulary"];
-    
+    $scope.resources = ["Kanji","Vocabulary","Radicals"];
+    $scope.showHideLevelInput = function(){
+        if($scope.selectedResource === "Radicals") {
+            $scope.radicalsSelected = true;
+        }
+        else {
+            $scope.radicalsSelected = false;
+        }
+    }
+
     $scope.getUserInfo = function(){ //Hämta namn och tillgängliga nivåer
         getUserInfo($scope, $http, $cookies);
     }
     
     $scope.startGame = function(){
-        
+        $scope.loading = true;
+
         var selectedResource = $scope.selectedResource.toLowerCase(); //
         var levels = $scope.levels;
         if (!levels) {
@@ -47,6 +59,14 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
                 shuffledResponse = shuffle(response.data.requested_information);
             }
             
+            if(selectedResource === "radicals") {
+                for(var i = 0; i<shuffledResponse.length; i++){
+                    if(shuffledResponse[i].user_specific.srs === "burned") {
+                        shuffledResponse.splice(i,1);
+                    }
+                }
+            }
+
             var slicedResponse = shuffledResponse.slice(0,6);
 
             var kanjiArray = [];
@@ -54,6 +74,9 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
         
             for(var i = 0; i<slicedResponse.length; i++) {
                 var kanjiObject = {character: slicedResponse[i].character, clicked: false, correct: false, tileId : i, fail: false};
+                if(kanjiObject.character === null){ //Om radicals är valt och ingen unicode finns för symbolen
+                    kanjiObject.imgUrl = slicedResponse[i].image;
+                }
                 var meaningToBeSliced = slicedResponse[i].meaning;
                 var meaningPart = meaningToBeSliced.split(",");
                 var meaningObject = {character: meaningPart[0], clicked: false, correct: false, tileId : i, fail: false};
@@ -66,6 +89,8 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
         
             tilesToEndGame = scopeArray.length;
             $scope.kanji = scopeArray;});
+
+            $scope.loading = false;
 
             $scope.toggleActive = function(chosenTile){
             if(chosenTile != lastPressedTile && !chosenTile.correct) {
@@ -84,6 +109,8 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
 });
 
 function getUserInfo($scope, $http, $cookies) {
+    $scope.loading = true;
+
     api = $scope.apiKey;
     var userInfo = getUserInfoUrl(api);
     
@@ -100,9 +127,10 @@ function getUserInfo($scope, $http, $cookies) {
     function(error) {
         $scope.errorMessage = true;
         var errorDiv = clearAndGetErrorDiv();
-        errorDiv.innerHTML = "The API key is not valid or WaniKani is undergoing maintenance. Please check your key or wait until the maintenance is over."
-         
+        errorDiv.innerHTML = "The API key is not valid or WaniKani is undergoing maintenance. Please check your key or wait until the maintenance is over.";
     });
+
+    $scope.loading = false;
 }
 
 function compareKanjiInArray($timeout, $scope){
