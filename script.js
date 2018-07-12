@@ -7,6 +7,9 @@ var lastPressedTile;
 var app = angular.module('kanjiApp', ['ngCookies']);
 app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
     
+    // $scope.gameOn = false;
+    // $scope.gameWon = false;
+
     $scope.restart = function(){
         $scope.gameWon = false;
         $scope.gameOn = false;
@@ -32,11 +35,11 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
 
     $scope.getUserInfo = function(){ //Hämta namn och tillgängliga nivåer
         getUserInfo($scope, $http, $cookies);
+        
     }
     
     $scope.startGame = function(){
         $scope.loading = true;
-
         var selectedResource = $scope.selectedResource.toLowerCase(); //
         var levels = $scope.levels;
         if (!levels) {
@@ -88,29 +91,49 @@ app.controller('kanjiCtrl', function($scope, $http, $timeout, $cookies) {
             var scopeArray = shuffle(kanjiArray.concat(meaningArray));
         
             tilesToEndGame = scopeArray.length;
-            $scope.kanji = scopeArray;});
-
+            $scope.kanji = scopeArray;
+        
             $scope.loading = false;
+        }, //error
+        function(error){
+            $scope.errorMessage = true;
+            var errorDiv = clearAndGetErrorDiv();
+            errorDiv.innerHTML = "Failed getting the requested resources from WaniKani. Either WaniKani is under maintenance or something has fucked up big time. Please try again and good luck.";
+            $scope.loading = false;
+        });
 
-            $scope.toggleActive = function(chosenTile){
+        $scope.toggleActive = function(chosenTile){
             if(chosenTile != lastPressedTile && !chosenTile.correct) {
                 chosenKanji.push(chosenTile);
                 chosenTile.clicked = true;
                 lastPressedTile = chosenTile;
                 compareKanjiInArray($timeout, $scope);
             }
-        }, //error
-        function(error){
-            $scope.errorMessage = true;
-            var errorDiv = clearAndGetErrorDiv();
-            errorDiv.innerHTML = "Failed getting the requested resources from WaniKani. Either WaniKani is under maintenance or something has fucked up big time. Please try again and good luck.";
         }
+    }
+    document.onkeydown = function(e) {
+        e = e || window.event;
+            switch (e.which || e.keyCode) {
+                case 13 : 
+                if(!$scope.apiSuccessfullyRetrieved){
+                    let sendApiButton = document.getElementById("sendApiBtn");
+                    sendApiButton.click();
+                }
+                else if($scope.apiSuccessfullyRetrieved && !$scope.gameOn){
+                    let startGameButton = document.getElementById("startGameBtn");
+                    startGameButton.click();
+                }
+                else if($scope.gameWon) {
+                    let restartGameButton = document.getElementById("restartGameBtn");
+                    restartGameButton.click()
+                }
+                break;
+      }    
     }
 });
 
 function getUserInfo($scope, $http, $cookies) {
     $scope.loading = true;
-
     api = $scope.apiKey;
     var userInfo = getUserInfoUrl(api);
     
@@ -123,14 +146,14 @@ function getUserInfo($scope, $http, $cookies) {
             $cookies.put('apiKey',api);
         }
         $scope.errorMessage = false;
+        $scope.loading = false;
     }, //vid error
     function(error) {
         $scope.errorMessage = true;
         var errorDiv = clearAndGetErrorDiv();
         errorDiv.innerHTML = "The API key is not valid or WaniKani is undergoing maintenance. Please check your key or wait until the maintenance is over.";
+        $scope.loading = false;
     });
-
-    $scope.loading = false;
 }
 
 function compareKanjiInArray($timeout, $scope){

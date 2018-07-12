@@ -34,7 +34,7 @@
                 <br/>
             </div>
 
-            <button class="btn" ng-click="getUserInfo()" ng-disabled="apiInput.$invalid">Send key</button>
+            <button class="btn" ng-click="getUserInfo()" ng-disabled="apiInput.$invalid" id="sendApiBtn">Send key</button>
         </div>
 
         <div id="optionsBox" ng-hide="gameOn || !apiSuccessfullyRetrieved">
@@ -55,16 +55,18 @@
             <div ng-show="radicalsSelected">
                 Selecting radicals will get you your non-burned radicals.
             </div>
-            <button class="btn" ng-click="startGame()" ng-disabled="levelInput.$invalid">Start the game</button>
+            <button class="btn" ng-click="startGame()" ng-disabled="levelInput.$invalid" id="startGameBtn">Start the game</button>
         </div>
 
-        <div id="loader" ng-show="loading"></div>
+        <div id="loader" ng-show="loading">
+            <!-- Laddsnurra -->
+        </div>
 
         <div id="winMessage" ng-show="gameWon">
             Congratulations! You beat the game!
             <br /> Click here to play again!
             <br />
-            <button class="btn" ng-click="restart()">遊ぼう！</button>
+            <button class="btn" ng-click="restart()" id="restartGameBtn">遊ぼう！</button>
         </div>
 
         <button class="btn" ng-show="gameOn && !gameWon" ng-click="restart()">Stop the game</button>
